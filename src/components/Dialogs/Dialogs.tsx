@@ -20,8 +20,7 @@ const Dialogs: React.FC<DialogsType> = (props) => {
         props.sendMessage()
     }
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value
-        props.updateNewMessageBody(body)
+        props.updateNewMessageBody(e.currentTarget.value)
     }
 
     return (

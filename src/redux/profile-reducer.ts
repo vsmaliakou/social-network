@@ -5,8 +5,8 @@ const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 let initialState = {
     posts: [
-        {message: "Hi, how are you?", likeCount: 12},
-        {message: "It's my first post", likeCount: 11}
+        {id: 1, message: "Hi, how are you?", likeCount: 12},
+        {id: 2, message: "It's my first post", likeCount: 11}
     ],
     newPostText: 'it-kamasutra.com'
 }
@@ -28,8 +28,16 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
-export const updateNewPostTextActionCreator = (text: string | any) =>
-    ({type: UPDATE_NEW_POST_TEXT, newText: text})
+export const addPostActionCreator = () => {
+    return {
+        type: ADD_POST
+    } as const
+}
+export const updateNewPostTextActionCreator = (text: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    } as const
+}
 
 export default profileReducer

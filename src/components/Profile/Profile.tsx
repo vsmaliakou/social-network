@@ -12,8 +12,7 @@ const Profile: React.FC<ProfileType> = (props) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer posts={props.profilePage.posts}
-                              newPostText={props.profilePage.newPostText}
+            <MyPostsContainer profilePage={props.profilePage}
                               dispatch={props.dispatch}/>
         </div>
     )

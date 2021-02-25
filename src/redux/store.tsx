@@ -1,6 +1,6 @@
 import React from 'react';
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
+import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
+import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
 
 export type PostType = {
     message: string
@@ -22,17 +22,21 @@ export type DialogsPageType = {
     messages: Array<MessageType>
     newMessageBody: string
 }
-export  type ActionType = {
-    type: string
-    newText?: string | any
-    body?: string | any
-}
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
+export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
+    ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator>
+export type StoreType = {
+    _state: StateType
+    _onChange: () => void
+    getState: () => StateType
+    subscribe: (callback: () => void) => void
+    dispatch: (action: ActionType) => void
+}
 
-let store = {
+let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -61,21 +65,21 @@ let store = {
             newMessageBody: ""
         }
     },
-    _callSubscriber(state: StateType) {
+    _onChange() {
         console.log('State changed')
     },
 
     getState() {
         return this._state
     },
-    subscribe(observer: any) {
-        this._callSubscriber = observer
+    subscribe(callback) {
+        this._onChange = callback
     },
 
-    dispatch(action: ActionType) { //{type: 'ADD-POST'}
+    dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._callSubscriber(this.getState())
+        this._onChange()
     }
 }
 
