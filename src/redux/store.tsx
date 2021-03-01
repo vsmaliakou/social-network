@@ -11,6 +11,7 @@ export type DialogItemType = {
     name: string
 }
 export type MessageType = {
+    id: number
     message: string
 }
 export type ProfilePageType = {
@@ -55,12 +56,12 @@ let store: StoreType = {
                 {id: 6, name: "Valera"},
             ],
             messages: [
-                {message: "Hi"},
-                {message: "How is your it-kamasutra?"},
-                {message: "Yo"},
-                {message: "Yo"},
-                {message: "Yo"},
-                {message: "Yo"},
+                {id: 1, message: "Hi"},
+                {id: 2, message: "How is your it-kamasutra?"},
+                {id: 3, message: "Yo"},
+                {id: 4, message: "Yo"},
+                {id: 5, message: "Yo"},
+                {id: 6, message: "Yo"},
             ],
             newMessageBody: ""
         }

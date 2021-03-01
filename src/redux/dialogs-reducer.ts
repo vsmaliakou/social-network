@@ -13,12 +13,12 @@ let initialState = {
         {id: 6, name: "Valera"},
     ],
     messages: [
-        {message: "Hi"},
-        {message: "How is your it-kamasutra?"},
-        {message: "Yo"},
-        {message: "Yo"},
-        {message: "Yo"},
-        {message: "Yo"},
+        {id: 1, message: "Hi"},
+        {id: 2, message: "How is your it-kamasutra?"},
+        {id: 3, message: "Yo"},
+        {id: 4, message: "Yo"},
+        {id: 5, message: "Yo"},
+        {id: 6, message: "Yo"},
     ],
     newMessageBody: ""
 }
@@ -26,17 +26,18 @@ let initialState = {
 const dialogsReducer = (state: DialogsPageType = initialState, action: ActionType) => {
     switch (action.type) {
         case SEND_MESSAGE: {
-            let stateCopy = {...state}
-            stateCopy.messages = [...state.messages]
-            let body = stateCopy.newMessageBody
-            stateCopy.newMessageBody = ""
-            stateCopy.messages.push({message: body})
-            return stateCopy
+            let body = state.newMessageBody
+            return {
+                ...state,
+                messages: [...state.messages, {id: 7, message: body}],
+                newMessageBody: ""
+            }
         }
         case UPDATE_NEW_MESSAGE_BODY: {
-            let stateCopy = {...state}
-            stateCopy.newMessageBody = action.body
-            return stateCopy
+            return {
+                ...state,
+                newMessageBody: action.body
+            }
         }
         default:
             return state
