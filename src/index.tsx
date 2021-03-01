@@ -4,7 +4,7 @@ import React from 'react';
 import './index.css';
 import {renderEntireTree} from "./redux/render";
 
-store.subscribe(renderEntireTree)
+// store.subscribe(renderEntireTree)
 renderEntireTree()
 
 // If you want your app to work offline and load faster, you can change
