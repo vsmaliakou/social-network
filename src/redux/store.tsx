@@ -17,14 +17,18 @@ export type MessageType = {
 }
 export type UserType = {
     id: number
-    fullName: string
+    // fullName: string
+    name: string
     status: string
     location: {
         city: string
         country: string
     }
     followed: boolean
-    photoURL: string
+    // photoURL: string
+    photos: {
+        small: string
+    }
 }
 export type ProfilePageType = {
     posts: Array<PostType>
