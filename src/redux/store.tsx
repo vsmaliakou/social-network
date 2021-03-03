@@ -17,7 +17,6 @@ export type MessageType = {
 }
 export type UserType = {
     id: number
-    // fullName: string
     name: string
     status: string
     location: {
@@ -25,7 +24,6 @@ export type UserType = {
         country: string
     }
     followed: boolean
-    // photoURL: string
     photos: {
         small: string
     }
