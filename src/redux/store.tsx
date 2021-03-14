@@ -1,7 +1,14 @@
 import React from 'react';
 import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
 import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
-import usersReducer, {followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, unfollowAC} from "./users-reduser";
+import usersReducer, {
+    followAC,
+    setCurrentPageAC,
+    setTotalUsersCountAC,
+    setUsersAC,
+    toggleIsFetchingAC,
+    unfollowAC
+} from "./users-reduser";
 
 export type PostType = {
     message: string
@@ -42,6 +49,7 @@ export type UsersPageType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 export type StateType = {
     profilePage: ProfilePageType
@@ -51,7 +59,7 @@ export type StateType = {
 export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
     ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator> |
     ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
-    ReturnType<typeof setCurrentPageAC> | ReturnType<typeof setTotalUsersCountAC>
+    ReturnType<typeof setCurrentPageAC> | ReturnType<typeof setTotalUsersCountAC> | ReturnType<typeof toggleIsFetchingAC>
 export type StoreType = {
     _state: StateType
     _onChange: () => void
@@ -92,7 +100,8 @@ let store: StoreType = {
             users: [],
             pageSize: 0,
             totalUsersCount: 0,
-            currentPage: 0
+            currentPage: 0,
+            isFetching: false
         }
     },
     _onChange() {
