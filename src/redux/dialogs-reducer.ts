@@ -44,12 +44,12 @@ const dialogsReducer = (state: DialogsPageType = initialState, action: ActionTyp
     }
 }
 
-export const sendMessageCreator = () => {
+export const sendMessage = () => {
     return {
         type: SEND_MESSAGE
     } as const
 }
-export const updateNewMessageBodyCreator = (text: string) => {
+export const updateNewMessageBody = (text: string) => {
     return {
         type: UPDATE_NEW_MESSAGE_BODY,
         body: text

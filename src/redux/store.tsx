@@ -1,13 +1,13 @@
 import React from 'react';
-import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
-import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
+import profileReducer, {addPost, updateNewPostText} from "./profile-reducer";
+import dialogsReducer, {sendMessage, updateNewMessageBody} from "./dialogs-reducer";
 import usersReducer, {
-    followAC,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleIsFetchingAC,
-    unfollowAC
+    follow,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleIsFetching,
+    unfollow
 } from "./users-reduser";
 
 export type PostType = {
@@ -56,10 +56,10 @@ export type StateType = {
     dialogsPage: DialogsPageType
     usersPage: UsersPageType
 }
-export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
-    ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator> |
-    ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
-    ReturnType<typeof setCurrentPageAC> | ReturnType<typeof setTotalUsersCountAC> | ReturnType<typeof toggleIsFetchingAC>
+export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText> |
+    ReturnType<typeof sendMessage> | ReturnType<typeof updateNewMessageBody> |
+    ReturnType<typeof follow> | ReturnType<typeof unfollow> | ReturnType<typeof setUsers> |
+    ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> | ReturnType<typeof toggleIsFetching>
 export type StoreType = {
     _state: StateType
     _onChange: () => void
