@@ -1,7 +1,7 @@
 import React from 'react';
 import profileReducer, {addPostActionCreator, updateNewPostTextActionCreator} from "./profile-reducer";
 import dialogsReducer, {sendMessageCreator, updateNewMessageBodyCreator} from "./dialogs-reducer";
-import usersReducer, {followAC, setUsersAC, unfollowAC} from "./users-reduser";
+import usersReducer, {followAC, setCurrentPageAC, setTotalUsersCountAC, setUsersAC, unfollowAC} from "./users-reduser";
 
 export type PostType = {
     message: string
@@ -39,6 +39,9 @@ export type DialogsPageType = {
 }
 export type UsersPageType = {
     users: Array<UserType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 export type StateType = {
     profilePage: ProfilePageType
@@ -47,7 +50,8 @@ export type StateType = {
 }
 export type ActionType = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator> |
     ReturnType<typeof sendMessageCreator> | ReturnType<typeof updateNewMessageBodyCreator> |
-    ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC>
+    ReturnType<typeof followAC> | ReturnType<typeof unfollowAC> | ReturnType<typeof setUsersAC> |
+    ReturnType<typeof setCurrentPageAC> | ReturnType<typeof setTotalUsersCountAC>
 export type StoreType = {
     _state: StateType
     _onChange: () => void
@@ -85,7 +89,10 @@ let store: StoreType = {
             newMessageBody: ""
         },
         usersPage: {
-            users: []
+            users: [],
+            pageSize: 0,
+            totalUsersCount: 0,
+            currentPage: 0
         }
     },
     _onChange() {
