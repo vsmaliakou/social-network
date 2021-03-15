@@ -1,5 +1,5 @@
 import React from 'react';
-import profileReducer, {addPost, updateNewPostText} from "./profile-reducer";
+import profileReducer, {addPost, setUserProfile, updateNewPostText} from "./profile-reducer";
 import dialogsReducer, {sendMessage, updateNewMessageBody} from "./dialogs-reducer";
 import usersReducer, {
     follow,
@@ -14,6 +14,22 @@ export type PostType = {
     message: string
     likeCount: number
 }
+export type UserProfileType = {
+    aboutMe: string
+    contacts: {
+        facebook: string,
+        vk: string,
+        instagram: string,
+    },
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    userId: number,
+    photos: {
+        small: string,
+        large: string
+    }
+} | null
 export type DialogItemType = {
     id: number
     name: string
@@ -38,6 +54,7 @@ export type UserType = {
 export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
+    profile: UserProfileType
 }
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>
@@ -57,9 +74,11 @@ export type StateType = {
     usersPage: UsersPageType
 }
 export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText> |
-    ReturnType<typeof sendMessage> | ReturnType<typeof updateNewMessageBody> |
-    ReturnType<typeof follow> | ReturnType<typeof unfollow> | ReturnType<typeof setUsers> |
-    ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> | ReturnType<typeof toggleIsFetching>
+    ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> |
+    ReturnType<typeof updateNewMessageBody> | ReturnType<typeof follow> |
+    ReturnType<typeof unfollow> | ReturnType<typeof setUsers> |
+    ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> |
+    ReturnType<typeof toggleIsFetching>
 export type StoreType = {
     _state: StateType
     _onChange: () => void
@@ -75,7 +94,23 @@ let store: StoreType = {
                 {message: "Hi, how are you?", likeCount: 12},
                 {message: "It's my first post", likeCount: 11}
             ],
-            newPostText: 'it-kamasutra.com'
+            newPostText: 'it-kamasutra.com',
+            profile: {
+                aboutMe: "",
+                contacts: {
+                    facebook: "",
+                    vk: "",
+                    instagram: "",
+                },
+                lookingForAJob: false,
+                lookingForAJobDescription: "",
+                fullName: "",
+                userId: 0,
+                photos: {
+                    small: "",
+                    large: ""
+                }
+            }
         },
         dialogsPage: {
             dialogs: [
