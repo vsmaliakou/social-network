@@ -13,8 +13,10 @@ import axios from 'axios';
 import Users from './Users/Users';
 import Preloader from "../Common/Preloader/Preloader";
 
-type UsersContainerType = {
+type MapStateToPropsType = {
     usersPage: UsersPageType
+}
+type MapDispatchToPropsType = {
     follow: (userID: number) => void
     unfollow: (userID: number) => void
     setUsers: (users: Array<UserType>) => void
@@ -22,6 +24,7 @@ type UsersContainerType = {
     setTotalUsersCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
 }
+type UsersContainerType = MapStateToPropsType & MapDispatchToPropsType
 
 class UsersContainer extends React.Component<UsersContainerType> {
 

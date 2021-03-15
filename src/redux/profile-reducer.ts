@@ -37,7 +37,6 @@ const profileReducer = (state: ProfilePageType = initialState, action: ActionTyp
                 profile: action.profile
             }
         }
-
         default:
             return state
     }
