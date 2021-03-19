@@ -4,13 +4,13 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {UserProfileType} from "../../redux/store";
 
 type ProfileType = {
-    profile: UserProfileType
+    profilePage: UserProfileType
 }
 
 const Profile: React.FC<ProfileType> = (props) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profilePage={props.profilePage}/>
             <MyPostsContainer/>
         </div>
     )

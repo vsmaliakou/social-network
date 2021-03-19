@@ -7,7 +7,7 @@ import {StateType, UserProfileType} from "../../redux/store";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 
 type MapStateToPropsType = {
-    profile: UserProfileType
+    profilePage: UserProfileType
 }
 type MapDispatchToPropsType = {
     setUserProfile: (profile: UserProfileType | null) => void
@@ -39,7 +39,7 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
 }
 
 let mapStateToProps = (state: StateType): MapStateToPropsType => ({
-    profile: state.profilePage.profile
+    profilePage: state.profilePage.profile
 })
 
 let withUrlDataContaunerComponent = withRouter(ProfileContainer)

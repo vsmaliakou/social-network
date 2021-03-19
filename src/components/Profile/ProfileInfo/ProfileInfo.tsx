@@ -4,22 +4,22 @@ import {UserProfileType} from "../../../redux/store";
 import Preloader from "../../Common/Preloader/Preloader";
 
 type ProfileInfoType = {
-    profile: UserProfileType
+    profilePage: UserProfileType
 }
 
 const ProfileInfo: React.FC<ProfileInfoType> = (props) => {
 
-    if (!props.profile) {
+    if (!props.profilePage) {
         return <Preloader/>
     }
 
     return (
         <div>
-            <div>
+            <div className={s.imgBlock}>
                 <img src='https://www.laoistoday.ie/wp-content/uploads/2018/01/Digital-technology.jpg'/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
+                <img src={props.profilePage.photos.large}/>
                 ava + description
             </div>
         </div>

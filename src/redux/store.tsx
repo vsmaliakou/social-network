@@ -9,6 +9,7 @@ import usersReducer, {
     toggleIsFetching,
     unfollow
 } from "./users-reduser";
+import { setAuthUserData } from './auth-reducer';
 
 export type PostType = {
     message: string
@@ -68,17 +69,27 @@ export type UsersPageType = {
     currentPage: number
     isFetching: boolean
 }
+export type DataType = {
+    email: string | null
+    id: number | null
+    login: string | null
+}
+export type AuthorizationType = {
+    data: DataType
+    isAuth: boolean
+}
 export type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     usersPage: UsersPageType
+    auth: AuthorizationType
 }
 export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText> |
     ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> |
     ReturnType<typeof updateNewMessageBody> | ReturnType<typeof follow> |
     ReturnType<typeof unfollow> | ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> |
-    ReturnType<typeof toggleIsFetching>
+    ReturnType<typeof toggleIsFetching> | ReturnType<typeof setAuthUserData>
 export type StoreType = {
     _state: StateType
     _onChange: () => void
@@ -86,6 +97,7 @@ export type StoreType = {
     subscribe: (callback: () => void) => void
     dispatch: (action: ActionType) => void
 }
+/*
 
 let store: StoreType = {
     _state: {
@@ -158,4 +170,4 @@ let store: StoreType = {
     }
 }
 
-export default store
+export default store*/
