@@ -20,7 +20,6 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
             withCredentials: true
         })
             .then(response => {
-                debugger
                 if (response.data.resultCode === 0) {
                     this.props.setAuthUserData(response.data.data)
                 }
@@ -28,7 +27,6 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
     }
 
     render() {
-        debugger
         return (
             <Header {...this.props}/>
         )
@@ -36,7 +34,6 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
 }
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => {
-    debugger
     return {
         auth: state.auth
     }

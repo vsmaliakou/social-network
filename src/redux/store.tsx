@@ -7,7 +7,8 @@ import usersReducer, {
     setTotalUsersCount,
     setUsers,
     toggleIsFetching,
-    unfollow
+    unfollow,
+    toggleFollowingInProgress
 } from "./users-reduser";
 import { setAuthUserData } from './auth-reducer';
 
@@ -68,6 +69,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 export type DataType = {
     email: string | null
@@ -89,7 +91,8 @@ export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNe
     ReturnType<typeof updateNewMessageBody> | ReturnType<typeof follow> |
     ReturnType<typeof unfollow> | ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> |
-    ReturnType<typeof toggleIsFetching> | ReturnType<typeof setAuthUserData>
+    ReturnType<typeof toggleIsFetching> | ReturnType<typeof toggleFollowingInProgress> |
+    ReturnType<typeof setAuthUserData>
 export type StoreType = {
     _state: StateType
     _onChange: () => void

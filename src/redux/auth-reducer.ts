@@ -14,7 +14,6 @@ let initialState = {
 const authReducer = (state: AuthorizationType = initialState, action: ActionType) => {
     switch (action.type) {
         case SET_USER_DATA:
-            debugger
             return {
                 ...state,
                 data: action.data,
@@ -27,7 +26,6 @@ const authReducer = (state: AuthorizationType = initialState, action: ActionType
 }
 
 export const setAuthUserData = (data: DataType) => { // ПОПРОБОВАТЬ ДЕСТРУКТУРИРОВАТЬ
-    debugger
     return {
         type: SET_USER_DATA,
         data: data
