@@ -2,12 +2,12 @@ import React from 'react';
 import profileReducer, {addPost, setUserProfile, updateNewPostText} from "./profile-reducer";
 import dialogsReducer, {sendMessage, updateNewMessageBody} from "./dialogs-reducer";
 import usersReducer, {
-    follow,
+    followSuccess,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
     toggleIsFetching,
-    unfollow,
+    unfollowSuccess,
     toggleFollowingInProgress
 } from "./users-reduser";
 import { setAuthUserData } from './auth-reducer';
@@ -88,8 +88,8 @@ export type StateType = {
 }
 export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText> |
     ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> |
-    ReturnType<typeof updateNewMessageBody> | ReturnType<typeof follow> |
-    ReturnType<typeof unfollow> | ReturnType<typeof setUsers> |
+    ReturnType<typeof updateNewMessageBody> | ReturnType<typeof followSuccess> |
+    ReturnType<typeof unfollowSuccess> | ReturnType<typeof setUsers> |
     ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> |
     ReturnType<typeof toggleIsFetching> | ReturnType<typeof toggleFollowingInProgress> |
     ReturnType<typeof setAuthUserData>
