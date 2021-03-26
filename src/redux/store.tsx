@@ -11,6 +11,7 @@ import usersReducer, {
     toggleFollowingInProgress
 } from "./users-reduser";
 import { setAuthUserData } from './auth-reducer';
+import {ThunkAction} from "redux-thunk";
 
 export type PostType = {
     message: string
@@ -93,6 +94,10 @@ export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNe
     ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> |
     ReturnType<typeof toggleIsFetching> | ReturnType<typeof toggleFollowingInProgress> |
     ReturnType<typeof setAuthUserData>
+export type UsersThunkType = ThunkAction<Promise<void> | void, UsersPageType, unknown, ActionType>
+export type ProfileThunkType = ThunkAction<Promise<void> | void, ProfilePageType, unknown, ActionType>
+export type AuthThunkType = ThunkAction<Promise<void> | void, AuthorizationType, unknown, ActionType>
+
 export type StoreType = {
     _state: StateType
     _onChange: () => void

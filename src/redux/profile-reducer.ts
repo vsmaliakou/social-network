@@ -1,4 +1,6 @@
-import {ActionType, ProfilePageType, UserProfileType} from "./store";
+import {ActionType, ProfilePageType, ProfileThunkType, UserProfileType} from "./store";
+import {usersAPI} from "../api/api";
+import {ThunkDispatch} from "redux-thunk";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -58,6 +60,19 @@ export const setUserProfile = (profile: UserProfileType) => {
         type: SET_USER_PROFILE,
         profile: profile
     } as const
+}
+export const getUserProfile = (userId: string): ProfileThunkType => {
+
+    return (dispatch: ThunkDispatch<ProfilePageType, unknown, ActionType>) => {
+
+        return (
+            usersAPI.getProfile(userId)
+                .then(response => {
+                    dispatch(setUserProfile(response.data))
+                })
+        )
+    }
+
 }
 
 export default profileReducer
