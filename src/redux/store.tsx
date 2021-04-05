@@ -1,5 +1,5 @@
 import React from 'react';
-import profileReducer, {addPost, setUserProfile, updateNewPostText} from "./profile-reducer";
+import profileReducer, {addPost, setUserProfile, updateNewPostText, setUserStatus} from "./profile-reducer";
 import dialogsReducer, {sendMessage, updateNewMessageBody} from "./dialogs-reducer";
 import usersReducer, {
     followSuccess,
@@ -58,6 +58,7 @@ export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
     profile: UserProfileType
+    status: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>
@@ -88,12 +89,12 @@ export type StateType = {
     auth: AuthorizationType
 }
 export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText> |
-    ReturnType<typeof setUserProfile> | ReturnType<typeof sendMessage> |
-    ReturnType<typeof updateNewMessageBody> | ReturnType<typeof followSuccess> |
-    ReturnType<typeof unfollowSuccess> | ReturnType<typeof setUsers> |
-    ReturnType<typeof setCurrentPage> | ReturnType<typeof setTotalUsersCount> |
-    ReturnType<typeof toggleIsFetching> | ReturnType<typeof toggleFollowingInProgress> |
-    ReturnType<typeof setAuthUserData>
+    ReturnType<typeof setUserProfile> | ReturnType<typeof setUserStatus> |
+    ReturnType<typeof sendMessage> | ReturnType<typeof updateNewMessageBody> |
+    ReturnType<typeof followSuccess> | ReturnType<typeof unfollowSuccess> |
+    ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> |
+    ReturnType<typeof setTotalUsersCount> | ReturnType<typeof toggleIsFetching> |
+    ReturnType<typeof toggleFollowingInProgress> | ReturnType<typeof setAuthUserData>
 export type UsersThunkType = ThunkAction<Promise<void> | void, UsersPageType, unknown, ActionType>
 export type ProfileThunkType = ThunkAction<Promise<void> | void, ProfilePageType, unknown, ActionType>
 export type AuthThunkType = ThunkAction<Promise<void> | void, AuthorizationType, unknown, ActionType>
