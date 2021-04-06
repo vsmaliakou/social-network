@@ -12,7 +12,7 @@ let mapStateToProps = (state: StateType) => {
     }
 }
 
-export default compose(
-    withAuthRedirect,
-    connect(mapStateToProps, {sendMessage, updateNewMessageBody})
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {sendMessage, updateNewMessageBody}),
+    withAuthRedirect
 )(Dialogs)
