@@ -1,18 +1,4 @@
 import React from 'react';
-import {addPost, setUserProfile, updateNewPostText, setUserStatus} from "./profile-reducer";
-import {sendMessage, updateNewMessageBody} from "./dialogs-reducer";
-import {
-    followSuccess,
-    setCurrentPage,
-    setTotalUsersCount,
-    setUsers,
-    toggleIsFetching,
-    unfollowSuccess,
-    toggleFollowingInProgress
-} from "./users-reduser";
-import { setAuthUserData } from './auth-reducer';
-import {ThunkAction} from "redux-thunk";
-import {reducers} from "./redux-store";
 
 // Profile
 export type PostType = {
@@ -90,21 +76,3 @@ export type AuthorizationType = {
     data: DataType
     isAuth: boolean
 }
-
-// redusers
-type ReducerType = typeof reducers
-export type StateType = ReturnType<ReducerType>
-
-// Action
-export type ActionType = ReturnType<typeof addPost> | ReturnType<typeof updateNewPostText> |
-    ReturnType<typeof setUserProfile> | ReturnType<typeof setUserStatus> |
-    ReturnType<typeof sendMessage> | ReturnType<typeof updateNewMessageBody> |
-    ReturnType<typeof followSuccess> | ReturnType<typeof unfollowSuccess> |
-    ReturnType<typeof setUsers> | ReturnType<typeof setCurrentPage> |
-    ReturnType<typeof setTotalUsersCount> | ReturnType<typeof toggleIsFetching> |
-    ReturnType<typeof toggleFollowingInProgress> | ReturnType<typeof setAuthUserData>
-
-// Thunks
-export type UsersThunkType = ThunkAction<Promise<void> | void, UsersPageType, unknown, ActionType>
-export type ProfileThunkType = ThunkAction<Promise<void> | void, ProfilePageType, unknown, ActionType>
-export type AuthThunkType = ThunkAction<Promise<void> | void, AuthorizationType, unknown, ActionType>

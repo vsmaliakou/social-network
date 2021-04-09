@@ -1,8 +1,9 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import {StateType, AuthorizationType} from "../../redux/store";
+import {AuthorizationType} from "../../redux/store";
 import {getAuthUserData} from "../../redux/auth-reducer";
+import {AppRootStateType} from "../../redux/redux-store";
 
 type MapStateToPropsType = {
     auth: AuthorizationType
@@ -25,7 +26,7 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
     }
 }
 
-const mapStateToProps = (state: StateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         auth: state.auth
     }

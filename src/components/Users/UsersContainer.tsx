@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {StateType, UserType} from '../../redux/store';
+import {UserType} from '../../redux/store';
 import {setCurrentPage, getUsers, follow, unfollow} from '../../redux/users-reduser';
 import Users from './Users/Users';
 import Preloader from "../Common/Preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import { AppRootStateType } from '../../redux/redux-store';
 
 type MapStateToPropsType = {
     users: Array<UserType>
@@ -52,7 +53,7 @@ class UsersContainer extends React.Component<UsersContainerType> {
 
 }
 
-let mapStatetoProps = (state: StateType) => {
+let mapStatetoProps = (state: AppRootStateType) => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
