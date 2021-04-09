@@ -23,7 +23,6 @@ export type UserProfileType = {
 } | null
 export type ProfilePageType = {
     posts: Array<PostType>
-    newPostText: string
     profile: UserProfileType
     status: string
 }
@@ -40,7 +39,6 @@ export type MessageType = {
 export type DialogsPageType = {
     dialogs: Array<DialogItemType>
     messages: Array<MessageType>
-    newMessageBody: string
 }
 
 // Users
