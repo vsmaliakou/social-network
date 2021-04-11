@@ -5,6 +5,7 @@ import {AuthorizationType} from "../../redux/store";
 
 type HeaderType = {
     auth: AuthorizationType
+    logout: () => void
 }
 
 const Header: React.FC<HeaderType> = (props) => {
@@ -13,7 +14,11 @@ const Header: React.FC<HeaderType> = (props) => {
             <img
                 src="https://belarus-online.by/images/obj/21057/0_medium.jpg"/>
             <div className={s.loginBlock}>
-                {props.auth.isAuth ? props.auth.data.login : <NavLink to={'/login'}>Login</NavLink>}
+                {props.auth.isAuth
+                    ? <div>
+                        {props.auth.data.login} - <button onClick={props.logout}>Log out</button>
+                </div>
+                    : <NavLink to={'/login'}>Login</NavLink>}
             </div>
         </header>
     )
