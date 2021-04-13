@@ -11,6 +11,8 @@ import { AppRootStateType } from "../../redux/redux-store";
 type MapStateToPropsType = {
     profilePage: UserProfileType
     status: string
+    authorizedUserId: number | null
+    isAuth: boolean
 }
 type MapDispatchToPropsType = {
     getUserProfile: (userId: string) => void
@@ -28,7 +30,7 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = "2"
+            userId = JSON.stringify(this.props.authorizedUserId)
         }
         this.props.getUserProfile(userId)
         this.props.getUserStatus(userId)
@@ -41,10 +43,14 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
     }
 }
 
-let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
-    profilePage: state.profilePage.profile,
-    status: state.profilePage.status
-})
+let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
+    return {
+        profilePage: state.profilePage.profile,
+        status: state.profilePage.status,
+        authorizedUserId: state.auth.data.id,
+        isAuth: state.auth.isAuth
+    }
+}
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus}),
