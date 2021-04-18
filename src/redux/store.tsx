@@ -74,3 +74,8 @@ export type AuthorizationType = {
     data: DataType
     isAuth: boolean
 }
+
+//App
+export type AppInitializedType = {
+    initialized: boolean
+}

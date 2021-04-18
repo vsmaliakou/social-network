@@ -5,13 +5,15 @@ import usersReducer, {UsersActionType} from "./users-reduser";
 import authReducer, {AuthActionType} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import {FormAction, reducer as formReducer} from 'redux-form'
+import appReducer, {AppActionType} from "./app-reducer";
 
 export let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
-    form: formReducer
+    form: formReducer,
+    app: appReducer
 })
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware))
@@ -22,6 +24,7 @@ export type AppActionsType = ProfileActionType
     | DialogsActionType
     | AuthActionType
     | UsersActionType
+    | AppActionType
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType | FormAction>
 

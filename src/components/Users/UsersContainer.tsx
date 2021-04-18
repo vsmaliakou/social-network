@@ -4,7 +4,6 @@ import {UserType} from '../../redux/store';
 import {setCurrentPage, getUsers, follow, unfollow} from '../../redux/users-reduser';
 import Users from './Users/Users';
 import Preloader from "../Common/Preloader/Preloader";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 import { AppRootStateType } from '../../redux/redux-store';
 
@@ -66,5 +65,4 @@ let mapStatetoProps = (state: AppRootStateType) => {
 
 export default compose<React.ComponentType>(
     connect(mapStatetoProps, {setCurrentPage, getUsers, follow, unfollow}),
-    withAuthRedirect
 )(UsersContainer)
