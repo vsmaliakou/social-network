@@ -76,12 +76,13 @@ export const setTotalUsersCount = (totalUsersCount: number) => ({type: "SET-TOTA
 export const toggleIsFetching = (isFetching: boolean) => ({type: "TOGGLE-IS-FETCHING", isFetching: isFetching} as const)
 export const toggleFollowingInProgress = (isFetching: boolean, userId: number) => ({type: "TOGGLE-IS-FOLLOWING-PROGRESS", isFetching, userId} as const)
 
-export const getUsers = (currentPage: number, pageSize: number): AppThunk => {
+export const requestUsers = (page: number, pageSize: number): AppThunk => {
 
     return (dispatch) => {
 
         dispatch(toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize)
             .then(data => {
                 dispatch(toggleIsFetching(false))
                 dispatch(setUsers(data.items))
