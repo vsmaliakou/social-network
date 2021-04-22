@@ -2,6 +2,7 @@ import React from 'react';
 
 // Profile
 export type PostType = {
+    id: number
     message: string
     likeCount: number
 }

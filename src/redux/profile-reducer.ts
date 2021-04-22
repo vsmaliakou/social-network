@@ -5,6 +5,7 @@ import {AppThunk} from "./redux-store";
 export type ProfileActionType = ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setUserStatus>
+    | ReturnType<typeof deletePost>
 
 let initialState = {
     posts: [
@@ -39,6 +40,12 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
                 status: action.status
             }
         }
+        case "DELETE-POST": {
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+        }
         default:
             return state
     }
@@ -47,6 +54,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileAc
 export const addPost = (newPostText: string) => ({type: "ADD-POST", newPostText} as const)
 export const setUserProfile = (profile: UserProfileType) => ({type: "SET-USER-PROFILE", profile: profile} as const)
 export const setUserStatus = (status: string) => ({type: "SET-USER-STATUS", status} as const)
+export const deletePost = (postId: number) => ({type: "DELETE-POST", postId} as const)
 
 export const getUserProfile = (userId: string): AppThunk => {
 

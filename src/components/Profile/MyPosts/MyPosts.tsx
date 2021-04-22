@@ -11,9 +11,9 @@ export type MyPostsType = {
     addPost: (newPostText: string) => void
 }
 
-const MyPosts: React.FC<MyPostsType> = (props) => {
+const MyPosts: React.FC<MyPostsType> = React.memo((props) => {
 
-    let postsElements = props.profilePage.posts.map(p => <Post message={p.message} likeCount={p.likeCount}/>)
+    let postsElements = [...props.profilePage.posts].reverse().map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
 
     let onAddPost = (values: any) => {
         props.addPost(values.newPostText)
@@ -29,7 +29,7 @@ const MyPosts: React.FC<MyPostsType> = (props) => {
         </div>
 
     )
-}
+})
 
 const maxLength10 = maxLengthCreator(10)
 
