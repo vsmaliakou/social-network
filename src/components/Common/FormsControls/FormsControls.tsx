@@ -1,6 +1,5 @@
 import React from "react";
 import s from './FormsControls.module.css'
-import {requiredField} from "../../../utils/validators/validators";
 import {Field} from "redux-form";
 
 type FormControlType = {
@@ -14,33 +13,19 @@ type FormControlType = {
         value: string
     }
     meta: {
-        active: boolean
-        asyncValidating: boolean
-        autofilled: boolean
-        dirty: boolean
-        dispatch: () => void
         error: undefined
-        form: string
-        initial: undefined
-        invalid: boolean
-        pristine: boolean
-        submitFailed: boolean
-        submitting: boolean
         touched: boolean
-        valid: boolean
-        visited: boolean
-        warning: undefined
     }
 }
 
-const FormControl: React.FC<FormControlType> = ({input, meta, ...props}) => {
-    const hasError = meta.touched && meta.error
+const FormControl: React.FC<FormControlType> = ({input, meta: {touched, error}, children}) => {
+    const hasError = touched && error
     return (
         <div className={s.formControl + " " + (hasError ? s.error : "")}>
             <div>
-                {props.children}
+                {children}
             </div>
-            {hasError && <span>{meta.error}</span>}
+            {hasError && <span>{error}</span>}
         </div>
     )
 }
@@ -62,7 +47,7 @@ export const Input: React.FC<FormControlType> = (props) => {
     )
 }
 
-export const createField = (placeholder: string, name: string, component: React.FC<FormControlType>, validate: Array<((value: any) => string | undefined)>, type?: string) => {
+export const createField = (placeholder: string , name: string, component: React.FC<FormControlType>, validate: Array<((value: any) => string | undefined)>, type?: string) => {
     return <div>
         <Field
             placeholder={placeholder}
