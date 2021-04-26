@@ -20,8 +20,9 @@ const Users: React.FC<UsersType> = ({pageSize, currentPage, totalUsersCount, onP
             <Paginator
                 pageSize={pageSize}
                 currentPage={currentPage}
-                totalUsersCount={totalUsersCount}
+                totalItemsCount={totalUsersCount}
                 onPageChanged={onPageChanged}
+                portionSize={10}
             />
             <div>
                 {props.users.map(u =>
