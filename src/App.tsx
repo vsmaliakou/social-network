@@ -5,9 +5,6 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import {Route, withRouter} from "react-router-dom";
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {compose} from "redux";
@@ -15,6 +12,12 @@ import {connect} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import {AppRootStateType} from "./redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
+import {withSuspense} from "./hoc/withSuspense";
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+
 
 type MapStateToPropsType = {
     initialized: boolean
@@ -40,9 +43,9 @@ class App extends React.Component<AppType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
-                    <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                    <Route path='/dialogs' render={() => <DialogsContainer/>}/>
-                    <Route path='/users' render={() => <UsersContainer/>}/>
+                    <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
+                    <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
+                    <Route path='/users' render={withSuspense(UsersContainer)}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
