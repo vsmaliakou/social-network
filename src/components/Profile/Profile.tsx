@@ -7,6 +7,8 @@ type ProfileType = {
     profilePage: UserProfileType
     status: string
     updateUserStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (file: File) => void
 }
 
 const Profile: React.FC<ProfileType> = (props) => {
@@ -16,6 +18,8 @@ const Profile: React.FC<ProfileType> = (props) => {
                 profilePage={props.profilePage}
                 status={props.status}
                 updateUserStatus={props.updateUserStatus}
+                isOwner={props.isOwner}
+                savePhoto={props.savePhoto}
             />
             <MyPostsContainer/>
         </div>

@@ -1,8 +1,9 @@
-.imgBlock img{
-    margin: 10px;
-    width: 1000px;
-    height: 200px;
-}
 .descriptionBlock {
     padding: 10px;
+}
+.mainPhoto {
+    max-width: 250px;
+}
+.contact {
+    padding-left: 10px;
 }
