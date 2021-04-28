@@ -13,7 +13,7 @@ export type MyPostsType = {
 
 const MyPosts: React.FC<MyPostsType> = React.memo((props) => {
 
-    let postsElements = [...props.profilePage.posts].reverse().map(p => <Post id={p.id} message={p.message} likeCount={p.likeCount}/>)
+    let postsElements = [...props.profilePage.posts].reverse().map(p => <Post key={p.id} id={p.id} message={p.message} likeCount={p.likeCount}/>)
 
     let onAddPost = (values: any) => {
         props.addPost(values.newPostText)

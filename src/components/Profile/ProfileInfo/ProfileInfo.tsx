@@ -12,34 +12,60 @@ type ProfileInfoType = {
     updateUserStatus: (status: string) => void
     isOwner: boolean
     savePhoto: (file: File) => void
+    saveProfile: (formData: UserProfileType) => Promise<any>
+}
+type ProfileDataType = {
+    profilePage: UserProfileType
+    isOwner: boolean
+    goToEditMode: () => void
+}
+type ContactType = {
+    contactTitle: string
+    contactValue: string
 }
 
-const ProfileInfo: React.FC<ProfileInfoType> = ({profilePage, status, updateUserStatus, isOwner, savePhoto}) => {
+const ProfileInfo: React.FC<ProfileInfoType> = ({
+                                                    profilePage,
+                                                    status,
+                                                    updateUserStatus,
+                                                    isOwner,
+                                                    savePhoto,
+                                                    saveProfile
+                                                }) => {
 
     let [editMode, setEditMode] = useState(false)
 
-    if (!profilePage) {
-        return <Preloader/>
-    }
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
             savePhoto(e.target.files[0])
         }
     }
 
+    const onSubmit = (formData: UserProfileType) => {
+        saveProfile(formData).then(
+            () => {
+                setEditMode(false)
+            }
+        )
+    }
 
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profilePage.photos.large || userPhoto} className={s.mainPhoto}/>
+                <img src={profilePage?.photos.large || userPhoto} className={s.mainPhoto}/>
                 {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
 
                 {editMode
-                    ? <ProfileDataForm profilePage={profilePage}/>
+                    ? <ProfileDataForm
+                        profilePage={profilePage}
+                        initialValues={profilePage}
+                        onSubmit={onSubmit}/>
                     : <ProfileData
                         profilePage={profilePage}
                         isOwner={isOwner}
-                        goToEditMode={() => {setEditMode(true)}}
+                        goToEditMode={() => {
+                            setEditMode(true)
+                        }}
                     />}
 
                 <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
@@ -48,13 +74,6 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({profilePage, status, updateUser
     )
 }
 
-export default ProfileInfo
-
-type ProfileDataType = {
-    profilePage: UserProfileType
-    isOwner: boolean
-    goToEditMode: () => void
-}
 const ProfileData: React.FC<ProfileDataType> = ({profilePage, isOwner, goToEditMode}) => {
 
     if (!profilePage) {
@@ -81,20 +100,18 @@ const ProfileData: React.FC<ProfileDataType> = ({profilePage, isOwner, goToEditM
                 <b>About me</b>: {profilePage.aboutMe}
             </div>
             <div>
-                <b>Contacts</b>: {(Object.keys(profilePage.contacts) as Array<keyof ContactsType >).map((key) => {
-                    return <Contact key={key} contactTitle={key} contactValue={profilePage.contacts[key]}/>
+                <b>Contacts</b>: {Object.keys(profilePage.contacts).map((key) => {
+                return <Contact key={key} contactTitle={key}
+                                contactValue={profilePage.contacts[key as keyof ContactsType]}/>
             })}
             </div>
         </div>
     )
 }
-
-type ContactType = {
-    contactTitle: string
-    contactValue: string
-}
-const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
+export const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
     return (
         <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
     )
 }
+
+export default ProfileInfo

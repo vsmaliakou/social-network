@@ -1,6 +1,7 @@
 import {PhotosType, ProfilePageType, UserProfileType} from "./store";
 import {profileAPI, usersAPI} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 export type ProfileActionType = ReturnType<typeof addPost>
     | ReturnType<typeof setUserProfile>
@@ -81,6 +82,16 @@ export const savePhoto = (file: File): AppThunk => async (dispatch) => {
     let response = await profileAPI.putPhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+export const saveProfile = (profile: UserProfileType): AppThunk => async (dispatch, getState) => {
+    const userId = JSON.stringify(getState().auth.data.id)
+    const response = await profileAPI.putProfile(profile)
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId))
+    } else {
+        dispatch(stopSubmit("edit-profile", {_error: response.data.messages[0]}))
+        return Promise.reject(response.data.messages[0])
     }
 }
 
