@@ -77,10 +77,12 @@ export type DataType = {
     email: string | null
     id: number | null
     login: string | null
+    captcha: string | null
 }
 export type AuthorizationType = {
     data: DataType
     isAuth: boolean
+    captchaUrl: string | null
 }
 
 //App
