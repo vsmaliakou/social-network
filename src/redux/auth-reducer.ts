@@ -44,6 +44,8 @@ export const getCaptchaUrlSuccess = (captchaUrl: string) => ({
     captchaUrl
 } as const)
 
+console.log('test')
+
 export const getAuthUserData = (): AppThunk => async (dispatch) => {
     let response = await authAPI.me()
     if (response.data.resultCode === 0) {
