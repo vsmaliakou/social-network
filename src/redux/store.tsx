@@ -60,7 +60,8 @@ export type UserType = {
     }
     followed: boolean
     photos: {
-        small: string
+        large: string | null
+        small: string | null
     }
 }
 export type UsersPageType = {
