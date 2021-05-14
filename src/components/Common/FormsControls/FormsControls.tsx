@@ -1,24 +1,14 @@
 import React from "react";
 import s from './FormsControls.module.css'
-import {Field} from "redux-form";
+import {Field, WrappedFieldProps} from "redux-form";
+import {WrappedFieldMetaProps} from 'redux-form/lib/Field'
+import {FieldValidatorType} from "../../../utils/validators/validators";
 
-type FormControlType = {
-    input: {
-        name: string
-        onBlur: () => void
-        onChange: () => void
-        onDragStart: () => void
-        onDrop: () => void
-        onFocus: () => void
-        value: string
-    }
-    meta: {
-        error: undefined
-        touched: boolean
-    }
+type FormControlPropsType = {
+    meta: WrappedFieldMetaProps
 }
 
-const FormControl: React.FC<FormControlType> = ({input, meta: {touched, error}, children}) => {
+const FormControl: React.FC<FormControlPropsType> = ({meta: {touched, error}, children}) => {
     const hasError = touched && error
     return (
         <div className={s.formControl + " " + (hasError ? s.error : "")}>
@@ -29,16 +19,11 @@ const FormControl: React.FC<FormControlType> = ({input, meta: {touched, error}, 
         </div>
     )
 }
-
-export const Textarea: React.FC<FormControlType> = (props) => {
+export const Textarea: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, ...restProps} = props
-    return (
-        <div>
-            <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
-        </div>
-    )
+    return <FormControl {...props}><textarea {...input} {...restProps}/></FormControl>
 }
-export const Input: React.FC<FormControlType> = (props) => {
+export const Input: React.FC<WrappedFieldProps> = (props) => {
     const {input, meta, ...restProps} = props
     return (
         <div>
@@ -47,14 +32,21 @@ export const Input: React.FC<FormControlType> = (props) => {
     )
 }
 
-export const createField = (placeholder: string , name: string, component: React.FC<FormControlType>, validate: Array<((value: any) => string | undefined)>, type?: string) => {
+export function createField<FormKeysType extends string>(placeholder: string | undefined,
+                            name: FormKeysType,
+                            component: React.FC<WrappedFieldProps>,
+                            validate: Array<FieldValidatorType>,
+                            props = {},
+                            text = "") {
     return <div>
         <Field
             placeholder={placeholder}
             name={name}
             component={component}
             validate={validate}
-            type={type}
-        />
+            {...props}
+        /> {text}
     </div>
 }
+
+export type GetStringKeys<T> = Extract<keyof T, string>

@@ -1,5 +1,6 @@
 import {follow, followSuccess, toggleFollowingInProgress, unfollow, unfollowSuccess} from "./users-reduser";
-import {APIResponseType, ResultCodesEnum, usersAPI} from "../api/api";
+import {APIResponseType, ResultCodesEnum} from "../api/api";
+import {usersAPI} from "../api/users-api";
 
 jest.mock("../api/api")
 const userAPIMock = usersAPI as jest.Mocked<typeof usersAPI>

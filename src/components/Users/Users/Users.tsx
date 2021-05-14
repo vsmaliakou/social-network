@@ -1,9 +1,9 @@
 import React from "react";
-import {UserType} from "../../../redux/store";
 import Paginator from "../../Common/Paginator/Paginator";
 import User from "./User";
+import {UserType} from "../../../redux/types";
 
-type UsersType = {
+type UsersPropsType = {
     users: Array<UserType>
     pageSize: number
     currentPage: number
@@ -14,7 +14,7 @@ type UsersType = {
     onPageChanged: (pageNumber: number) => void
 }
 
-const Users: React.FC<UsersType> = ({pageSize, currentPage, totalUsersCount, onPageChanged, ...props}) => {
+const Users: React.FC<UsersPropsType> = ({pageSize, currentPage, totalUsersCount, onPageChanged, ...props}) => {
     return (
         <div>
             <Paginator
@@ -22,7 +22,6 @@ const Users: React.FC<UsersType> = ({pageSize, currentPage, totalUsersCount, onP
                 currentPage={currentPage}
                 totalItemsCount={totalUsersCount}
                 onPageChanged={onPageChanged}
-                portionSize={10}
             />
             <div>
                 {props.users.map(u =>
