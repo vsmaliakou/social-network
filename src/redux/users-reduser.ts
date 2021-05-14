@@ -31,7 +31,6 @@ let initialState = {
 const usersReducer = (state = initialState, action: UsersActionType): UsersInitialStateType => {
     switch (action.type) {
         case "SN/USERS/FOLLOW": {
-            debugger
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -43,7 +42,6 @@ const usersReducer = (state = initialState, action: UsersActionType): UsersIniti
             }
         }
         case "SN/USERS/UNFOLLOW": {
-            debugger
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -111,7 +109,6 @@ export const requestUsers = (page: number, pageSize: number, filter: FilterType)
     dispatch(setTotalUsersCount(data.totalCount))
 }
 const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionType>, userId: number, apiMethod: Function, actionCreator: (userId: number) => UsersActionType) => {
-    debugger
     dispatch(toggleFollowingInProgress(true, userId))
     let response = await apiMethod(userId)
     if (response.data.resultCode === 0) {
@@ -120,11 +117,9 @@ const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionType>, userId: 
     dispatch(toggleFollowingInProgress(false, userId))
 }
 export const follow = (userId: number): AppThunk => async (dispatch) => {
-    debugger
     await _followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(userId), followSuccess)
 }
 export const unfollow = (userId: number): AppThunk => async (dispatch) => {
-    debugger
     await _followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(userId), unfollowSuccess)
 }
 
