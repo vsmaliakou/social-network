@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {UserType} from '../../redux/store';
-import {setCurrentPage, follow, unfollow, requestUsers} from '../../redux/users-reduser';
+import {follow, unfollow, requestUsers} from '../../redux/users-reduser';
 import Users from './Users/Users';
 import Preloader from "../Common/Preloader/Preloader";
 import {compose} from "redux";
@@ -14,6 +13,7 @@ import {
     getIsFetching,
     getFollowingInProgress
 } from '../../redux/users-selectors'
+import {UserType} from "../../redux/types";
 
 type MapStateToPropsType = {
     users: Array<UserType>
@@ -26,12 +26,11 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
-    setCurrentPage: (pageNumber: number) => void
     requestUsers: (currentPage: number, pageSize: number) => void
 }
-type UsersContainerType = MapStateToPropsType & MapDispatchToPropsType
+type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-class UsersContainer extends React.Component<UsersContainerType> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
         const {currentPage, pageSize} = this.props
@@ -39,8 +38,8 @@ class UsersContainer extends React.Component<UsersContainerType> {
     }
 
     onPageChanged = (pageNumber: number) => {
-        const {requestUsers, pageSize} = this.props
-        requestUsers(pageNumber, pageSize)
+        const {pageSize} = this.props
+        this.props.requestUsers(pageNumber, pageSize)
     }
 
     render() {
@@ -62,7 +61,7 @@ class UsersContainer extends React.Component<UsersContainerType> {
 
 }
 
-let mapStateToProps = (state: AppRootStateType) => {
+let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
@@ -74,5 +73,5 @@ let mapStateToProps = (state: AppRootStateType) => {
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {setCurrentPage, requestUsers, follow, unfollow}),
+    connect<MapStateToPropsType, MapDispatchToPropsType, null, AppRootStateType>(mapStateToProps, {requestUsers, follow, unfollow}),
 )(UsersContainer)

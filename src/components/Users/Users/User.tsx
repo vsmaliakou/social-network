@@ -1,23 +1,23 @@
 import React from "react";
-import {UserType} from "../../../redux/store";
 import s from '../Users.module.css'
 import userPhoto from '../../../assets/images/user.jpg'
 import {NavLink} from "react-router-dom";
+import { UserType } from "../../../redux/types";
 
-type OneUserType = {
+type UserPropsType = {
     user: UserType
     followingInProgress: Array<number>
     follow: (userId: number) => void
     unfollow: (userId: number) => void
 }
 
-const User: React.FC<OneUserType> = ({user, followingInProgress, follow, unfollow}) => {
+const User: React.FC<UserPropsType> = ({user, followingInProgress, follow, unfollow}) => {
     return (
         <div>
             <span>
                 <div>
                     <NavLink to={'/profile/' + user.id}>
-                        <img src={user.photos.small !== null ? user.photos.small : userPhoto} className={s.userPhoto}/>
+                        <img src={user.photos.small !== null ? user.photos.small : userPhoto} alt='userPhoto' className={s.userPhoto}/>
                     </NavLink>
                 </div>
                 <div>

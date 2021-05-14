@@ -1,9 +1,10 @@
 import * as serviceWorker from './serviceWorker';
 import React from 'react';
 import './index.css';
-import {renderEntireTree} from "./redux/render";
+import ReactDOM from "react-dom";
+import SamuraiApp from "./App";
 
-renderEntireTree()
+ReactDOM.render(<SamuraiApp/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

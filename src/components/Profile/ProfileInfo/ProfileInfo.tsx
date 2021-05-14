@@ -1,39 +1,35 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './ProfileInfo.module.css'
-import {ContactsType, UserProfileType} from "../../../redux/store";
 import Preloader from "../../Common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/images/user.jpg'
 import ProfileDataForm from "./ProfileDataForm";
+import {ProfileType, ContactsType} from "../../../redux/types";
 
-type ProfileInfoType = {
-    profilePage: UserProfileType
+type ProfileInfoPropsType = {
+    profilePage: ProfileType | null
     status: string
     updateUserStatus: (status: string) => void
     isOwner: boolean
     savePhoto: (file: File) => void
-    saveProfile: (formData: UserProfileType) => Promise<any>
-}
-type ProfileDataType = {
-    profilePage: UserProfileType
-    isOwner: boolean
-    goToEditMode: () => void
-}
-type ContactType = {
-    contactTitle: string
-    contactValue: string
+    // saveProfile: (formData: ProfileType) => Promise<any>
+    saveProfile: (profile: ProfileType) => Promise<any>
 }
 
-const ProfileInfo: React.FC<ProfileInfoType> = ({
-                                                    profilePage,
-                                                    status,
-                                                    updateUserStatus,
-                                                    isOwner,
-                                                    savePhoto,
-                                                    saveProfile
-                                                }) => {
+const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
+                                                         profilePage,
+                                                         status,
+                                                         updateUserStatus,
+                                                         isOwner,
+                                                         savePhoto,
+                                                         saveProfile
+                                                     }) => {
 
     let [editMode, setEditMode] = useState(false)
+
+    if (!profilePage) {
+        return <Preloader/>
+    }
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
@@ -41,7 +37,7 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({
         }
     }
 
-    const onSubmit = (formData: UserProfileType) => {
+    const onSubmit = (formData: ProfileType) => {
         saveProfile(formData).then(
             () => {
                 setEditMode(false)
@@ -52,7 +48,7 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profilePage?.photos.large || userPhoto} className={s.mainPhoto}/>
+                <img src={profilePage?.photos.large || userPhoto} className={s.mainPhoto} alt="img"/>
                 {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
 
                 {editMode
@@ -74,11 +70,13 @@ const ProfileInfo: React.FC<ProfileInfoType> = ({
     )
 }
 
-const ProfileData: React.FC<ProfileDataType> = ({profilePage, isOwner, goToEditMode}) => {
+type ProfileDataType = {
+    profilePage: ProfileType
+    isOwner: boolean
+    goToEditMode: () => void
+}
 
-    if (!profilePage) {
-        return <Preloader/>
-    }
+const ProfileData: React.FC<ProfileDataType> = ({profilePage, isOwner, goToEditMode}) => {
 
     return (
         <div>
@@ -108,7 +106,13 @@ const ProfileData: React.FC<ProfileDataType> = ({profilePage, isOwner, goToEditM
         </div>
     )
 }
-export const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
+
+type ContactPropsType = {
+    contactTitle: string
+    contactValue: string
+}
+
+export const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}) => {
     return (
         <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>
     )
