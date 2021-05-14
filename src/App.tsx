@@ -6,21 +6,20 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import {Route, withRouter, Switch, Redirect, BrowserRouter} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import store, {AppRootStateType} from "./redux/redux-store";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+import {UsersPage} from "./components/Users/UsersContainer";
+import {LoginPage} from "./components/Login/Login";
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
-const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 const SuspendedProfile = withSuspense(ProfileContainer)
 const SuspendedDialogs = withSuspense(DialogsContainer)
-const SuspendedUsers = withSuspense(UsersContainer)
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -55,11 +54,11 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                         <Route exact path='/' render={() => <Redirect to={'/profile'}/>}/>
                         <Route path='/profile/:userId?' render={() => <SuspendedProfile/>}/>
                         <Route path='/dialogs' render={() => <SuspendedDialogs/>}/>
-                        <Route path='/users' render={() => <SuspendedUsers/>}/>
+                        <Route path='/users' render={() => <UsersPage/>}/>
                         <Route path='/news' render={() => <News/>}/>
                         <Route path='/music' render={() => <Music/>}/>
                         <Route path='/settings' render={() => <Settings/>}/>
-                        <Route path='/login' render={() => <Login/>}/>
+                        <Route path='/login' render={() => <LoginPage/>}/>
                         <Route path='*' render={() => <div>404 PAGE NOT FOUND</div>}/>
                     </Switch>
                 </div>

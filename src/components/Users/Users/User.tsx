@@ -12,7 +12,6 @@ type UserPropsType = {
 }
 
 const User: React.FC<UserPropsType> = ({user, followingInProgress, follow, unfollow}) => {
-    debugger
     return (
         <div>
             <span>
