@@ -10,8 +10,10 @@ export type UsersActionType = ReturnType<typeof followSuccess>
     | ReturnType<typeof setTotalUsersCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof toggleFollowingInProgress>
+    | ReturnType<typeof setFilter>
 
 export type UsersInitialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
 
 let initialState = {
     users: [] as Array<UserType>,
@@ -19,12 +21,17 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    followingInProgress: [] as Array<number>
+    followingInProgress: [] as Array<number>,
+    filter: {
+        term: "",
+        friend: null as boolean | null
+    }
 }
 
 const usersReducer = (state = initialState, action: UsersActionType): UsersInitialStateType => {
     switch (action.type) {
         case "SN/USERS/FOLLOW": {
+            debugger
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -36,6 +43,7 @@ const usersReducer = (state = initialState, action: UsersActionType): UsersIniti
             }
         }
         case "SN/USERS/UNFOLLOW": {
+            debugger
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -66,6 +74,12 @@ const usersReducer = (state = initialState, action: UsersActionType): UsersIniti
                     : state.followingInProgress.filter(id => id !== action.userId)
             }
         }
+        case "SN/USERS/SET-FILTER": {
+            return {
+                ...state,
+                filter: action.payload
+            }
+        }
         default:
             return state
     }
@@ -85,16 +99,19 @@ export const toggleFollowingInProgress = (isFetching: boolean, userId: number) =
     isFetching,
     userId
 } as const)
+export const setFilter = (filter: FilterType) => ({type: "SN/USERS/SET-FILTER", payload: filter} as const)
 
-export const requestUsers = (page: number, pageSize: number): AppThunk => async (dispatch) => {
+export const requestUsers = (page: number, pageSize: number, filter: FilterType): AppThunk => async (dispatch) => {
     dispatch(toggleIsFetching(true))
     dispatch(setCurrentPage(page))
-    let data = await usersAPI.getUsers(page, pageSize)
+    dispatch(setFilter(filter))
+    let data = await usersAPI.getUsers(page, pageSize, filter.term, filter.friend)
     dispatch(toggleIsFetching(false))
     dispatch(setUsers(data.items))
     dispatch(setTotalUsersCount(data.totalCount))
 }
 const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionType>, userId: number, apiMethod: Function, actionCreator: (userId: number) => UsersActionType) => {
+    debugger
     dispatch(toggleFollowingInProgress(true, userId))
     let response = await apiMethod(userId)
     if (response.data.resultCode === 0) {
@@ -103,9 +120,11 @@ const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionType>, userId: 
     dispatch(toggleFollowingInProgress(false, userId))
 }
 export const follow = (userId: number): AppThunk => async (dispatch) => {
+    debugger
     await _followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(userId), followSuccess)
 }
 export const unfollow = (userId: number): AppThunk => async (dispatch) => {
+    debugger
     await _followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(userId), unfollowSuccess)
 }
 
