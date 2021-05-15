@@ -110,8 +110,8 @@ export const requestUsers = (page: number, pageSize: number, filter: FilterType)
 }
 const _followUnfollowFlow = async (dispatch: Dispatch<UsersActionType>, userId: number, apiMethod: Function, actionCreator: (userId: number) => UsersActionType) => {
     dispatch(toggleFollowingInProgress(true, userId))
-    let response = await apiMethod(userId)
-    if (response.data.resultCode === 0) {
+    let data = await apiMethod(userId)
+    if (data.resultCode === 0) {
         dispatch(actionCreator(userId))
     }
     dispatch(toggleFollowingInProgress(false, userId))
