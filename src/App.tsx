@@ -22,9 +22,11 @@ const {Content, Sider} = Layout;
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'));
 
 const SuspendedProfile = withSuspense(ProfileContainer)
 const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedChatPage = withSuspense(ChatPage)
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -67,7 +69,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                                 <Menu.Item key="5"><Link to="/users">Users</Link></Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub3" icon={<NotificationOutlined/>} title="subnav 3">
-                                <Menu.Item key="9">option9</Menu.Item>
+                                <Menu.Item key="9"><Link to="/chat">Chat</Link></Menu.Item>
                                 <Menu.Item key="10">option10</Menu.Item>
                                 <Menu.Item key="11">option11</Menu.Item>
                                 <Menu.Item key="12">option12</Menu.Item>
@@ -97,6 +99,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                                 <Route path='/music' render={() => <Music/>}/>
                                 <Route path='/settings' render={() => <Settings/>}/>
                                 <Route path='/login' render={() => <LoginPage/>}/>
+                                <Route path='/chat' render={() => <SuspendedChatPage/>}/>
                                 <Route path='*' render={() => <div>404 PAGE NOT FOUND</div>}/>
                             </Switch>
                         </Content>
