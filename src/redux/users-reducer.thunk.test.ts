@@ -1,4 +1,4 @@
-import {follow, followSuccess, toggleFollowingInProgress, unfollow, unfollowSuccess} from "./users-reduser";
+import {follow, followSuccess, toggleFollowingInProgress, unfollow, unfollowSuccess} from "./users-reducer";
 import {APIResponseType, ResultCodesEnum} from "../api/api";
 import {usersAPI} from "../api/users-api";
 

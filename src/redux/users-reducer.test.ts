@@ -1,4 +1,4 @@
-import usersReducer, {followSuccess, unfollowSuccess, UsersInitialStateType} from "./users-reduser";
+import usersReducer, {followSuccess, unfollowSuccess, UsersInitialStateType} from "./users-reducer";
 
 let state: UsersInitialStateType = {
     users: [
