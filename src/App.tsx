@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {Route, withRouter, Switch, Redirect, BrowserRouter, Link} from "react-router-dom";
+import {Route, withRouter, Switch, Redirect, BrowserRouter, Link, HashRouter} from "react-router-dom";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
@@ -122,11 +122,11 @@ let AppContainer = compose<React.ComponentType>(
 )(App)
 
 const SamuraiApp: React.FC = () => {
-    return <BrowserRouter>
+    return <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default SamuraiApp
